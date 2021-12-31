@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  application:
+    name:  onlineroomrent
+  freemarker:
+    suffix: .ftl
+  jpa:
+    show-sql: true
+  hibernate:
+    ddl-auto: create-drop
+  dilect: org.hibernate.dialect.PostgreSQL10Dialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/online-room-rent
+    username: postgres
+    password: postgres
