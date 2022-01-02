@@ -71,7 +71,7 @@
                                     <div class="col-md-12 control">
                                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
                                             Didn't have an an account!
-                                        <a href="/property/register">
+                                        <a href="/property-owner/register">
                                             Sign Up Here
                                         </a>
                                         </div>

@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
       httpSecurity.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and()
               .authorizeRequests()
-                .antMatchers("/","/login","/home","/contact-us","/admin/**","/api/v1/property-owner/**","/property-owner/**")
+                .antMatchers("/","/login","/home","/contact-us","/admin/**","/api/v1/property/**","/property-owner/**")
                 .permitAll()
                 .antMatchers("/api/v1/admin/**")
                 .permitAll()

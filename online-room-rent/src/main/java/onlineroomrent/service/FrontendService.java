@@ -1,8 +1,11 @@
 package onlineroomrent.service;
 
 import onlineroomrent.dao.entity.JwtTokenEntity;
+import onlineroomrent.dao.entity.PropertyCategoryEntity;
 import onlineroomrent.dao.entity.Role;
 import onlineroomrent.dto.*;
+
+import java.util.List;
 
 public interface FrontendService {
 
@@ -21,4 +24,6 @@ public interface FrontendService {
     JwtTokenEntity isValidToken(String jwt);
 
     void invalidateToken(String jwt);
+
+    List<PropertyCategoryEntity> findAllCategories();
 }

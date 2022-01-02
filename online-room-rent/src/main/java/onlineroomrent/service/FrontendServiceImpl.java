@@ -6,10 +6,7 @@ import onlineroomrent.constant.OnlineRoomRentConstant;
 import onlineroomrent.convertor.DtoToEntityConvertor;
 import onlineroomrent.dao.DaoService;
 import onlineroomrent.dao.entity.*;
-import onlineroomrent.dao.repository.AdminRepository;
-import onlineroomrent.dao.repository.JwtTokenRepository;
-import onlineroomrent.dao.repository.PropertyCategoryRepository;
-import onlineroomrent.dao.repository.RoleRepository;
+import onlineroomrent.dao.repository.*;
 import onlineroomrent.dateUtil.DateUtil;
 import onlineroomrent.dto.*;
 import onlineroomrent.exceptionHandle.exception.AccountBlockedException;
@@ -20,12 +17,9 @@ import onlineroomrent.jwtUtil.JwtAccessTokenUtil;
 import onlineroomrent.tenant.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
+
+import java.util.*;
 
 @Service
 public class FrontendServiceImpl implements FrontendService{
@@ -45,6 +39,9 @@ public class FrontendServiceImpl implements FrontendService{
     AdminRepository adminRepository;
     @Autowired
     RedisTemplate redisTemplate;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     public Integer saveFailedAttempt(String emailOrMobile){
         AdminEntity adminEntity =daoService.getUser(emailOrMobile);
@@ -87,17 +84,8 @@ public class FrontendServiceImpl implements FrontendService{
             adminEntity.setFailedAttempt(4);
             adminEntity.setMaxAttempt(3);
             daoService.saveAdmin(adminEntity);
-            String jwt=jwtAccessTokenUtil.createAccessToken(adminEntity.getId(),adminEntity.getUserType(),adminEntity.getFirstName());
-            JwtTokenEntity jwtTokenEntity= new JwtTokenEntity();
-            jwtTokenEntity.setAccessToken(jwt);
-            jwtTokenEntity.setUserType(jwtAccessTokenUtil.getPrincipalFromToken(jwt,adminEntity.getUserType()));
-            jwtTokenEntity.setTokenIdentity(jwtAccessTokenUtil.getPrincipalFromToken(jwt,"identity"));
-            jwtTokenEntity.setUserId(adminEntity.getId());
-            jwtTokenEntity.setActive(Boolean.TRUE);
-            jwtTokenEntity.setExpireAt(DateUtil.addMintues(OnlineRoomRentConstant.JWT_SESSION_EXPIRED));
-            jwtTokenEntity.setUserName(adminEntity.getFirstName());
-            jwtTokenEntity=jwtTokenRepository.save(jwtTokenEntity);
             apiResponse.setStatus(Boolean.TRUE);
+            String jwt=createAccessToken(adminEntity);
             apiResponse.setAccessToken(jwt);
             apiResponse.setMessage("Successfully logined");
             apiResponse.setRole(adminEntity.getUserType());
@@ -119,7 +107,7 @@ public class FrontendServiceImpl implements FrontendService{
     public ApiResponse registerOwner(RegisterRequest registerRequest){
         UserEntity entity=daoService.findByEmailOrMobile(registerRequest.getEmail(),null);
         if(entity!=null)
-            throw new EmailAlreadyExistException("Some one already taken email");
+            throw new EmailAlreadyExistException("Some one already taken this email");
         else if((entity=daoService.findByEmailOrMobile(registerRequest.getMobile(),null))!=null)
             throw new MobileAlreadyExist("Mobile number already registered");
         Role role=userRoleRepository.findByUserType(OnlineRoomRentConstant.PROPERTY_OWNER);
@@ -131,6 +119,9 @@ public class FrontendServiceImpl implements FrontendService{
         apiResponse.setMessage("Successfully registered owner");
         userEntity.setUserType(OnlineRoomRentConstant.PROPERTY_OWNER);
         UserEntity userEntity1 =daoService.registerUser(userEntity);
+        String jwt=createAccessToken(userEntity1);
+        apiResponse.setAccessToken(jwt);
+        apiResponse.setRedirectUri("/add-property");
         return apiResponse;
     }
 
@@ -196,5 +187,60 @@ public class FrontendServiceImpl implements FrontendService{
         JwtTokenEntity jwtTokenEntity=jwtTokenRepository.findByTokenIdentity(identity);
         jwtTokenEntity.setActive(Boolean.FALSE);
         jwtTokenRepository.save(jwtTokenEntity);
+    }
+
+    @Override
+    public List<PropertyCategoryEntity> findAllCategories() {
+          return categoryRepository.findAll();
+    }
+
+    public String createAccessToken(Object object){
+        if(object instanceof AdminEntity){
+            AdminEntity entity=null;
+            entity=(AdminEntity)object;
+            JwtTokenEntity jwtTokenEntity= new JwtTokenEntity();
+            String jwt=jwtAccessTokenUtil.createAccessToken(entity.getId(),entity.getUserType(),entity.getFirstName());
+            jwtTokenEntity.setAccessToken(jwt);
+            jwtTokenEntity.setUserType(jwtAccessTokenUtil.getPrincipalFromToken(jwt,entity.getUserType()));
+            jwtTokenEntity.setTokenIdentity(jwtAccessTokenUtil.getPrincipalFromToken(jwt,"identity"));
+            jwtTokenEntity.setUserId(entity.getId());
+            jwtTokenEntity.setActive(Boolean.TRUE);
+            jwtTokenEntity.setExpireAt(DateUtil.addMintues(OnlineRoomRentConstant.JWT_SESSION_EXPIRED));
+            jwtTokenEntity.setUserName(entity.getFirstName());
+            jwtTokenEntity=jwtTokenRepository.save(jwtTokenEntity);
+            return jwtTokenEntity.getAccessToken();
+        }
+
+        else if(object instanceof UserEntity){
+            UserEntity entity=null;
+            entity=(UserEntity)object;
+            JwtTokenEntity jwtTokenEntity= new JwtTokenEntity();
+            String jwt=jwtAccessTokenUtil.createAccessToken(entity.getId(),entity.getUserType(),entity.getFirstName());
+            jwtTokenEntity.setAccessToken(jwt);
+            jwtTokenEntity.setUserType(jwtAccessTokenUtil.getPrincipalFromToken(jwt,entity.getUserType()));
+            jwtTokenEntity.setTokenIdentity(jwtAccessTokenUtil.getPrincipalFromToken(jwt,"identity"));
+            jwtTokenEntity.setUserId(entity.getId());
+            jwtTokenEntity.setActive(Boolean.TRUE);
+            jwtTokenEntity.setExpireAt(DateUtil.addMintues(OnlineRoomRentConstant.JWT_SESSION_EXPIRED));
+            jwtTokenEntity.setUserName(entity.getFirstName());
+            jwtTokenEntity=jwtTokenRepository.save(jwtTokenEntity);
+            return jwtTokenEntity.getAccessToken();
+        }
+        else if(object instanceof UserEntity){
+            UserEntity entity=null;
+            entity=(UserEntity)object;
+            JwtTokenEntity jwtTokenEntity= new JwtTokenEntity();
+            String jwt=jwtAccessTokenUtil.createAccessToken(entity.getId(),entity.getUserType(),entity.getFirstName());
+            jwtTokenEntity.setAccessToken(jwt);
+            jwtTokenEntity.setUserType(jwtAccessTokenUtil.getPrincipalFromToken(jwt,entity.getUserType()));
+            jwtTokenEntity.setTokenIdentity(jwtAccessTokenUtil.getPrincipalFromToken(jwt,"identity"));
+            jwtTokenEntity.setUserId(entity.getId());
+            jwtTokenEntity.setActive(Boolean.TRUE);
+            jwtTokenEntity.setExpireAt(DateUtil.addMintues(OnlineRoomRentConstant.JWT_SESSION_EXPIRED));
+            jwtTokenEntity.setUserName(entity.getFirstName());
+            jwtTokenEntity=jwtTokenRepository.save(jwtTokenEntity);
+            return jwtTokenEntity.getAccessToken();
+        }
+      return null;
     }
 }

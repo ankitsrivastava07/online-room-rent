@@ -1,6 +1,7 @@
 package onlineroomrent;
 
 import onlineroomrent.security_config.filter.AdminWebControllerFilter;
+import onlineroomrent.security_config.filter.PropertyPosterWebControllerFilter;
 import onlineroomrent.security_config.filter.RequestAcessFilter;
 import onlineroomrent.security_config.filter.TokenValidatorFilter;
 import onlineroomrent.service.FrontendService;
@@ -25,15 +26,14 @@ public class OnlineRoomRentApplication {
 		SpringApplication.run(OnlineRoomRentApplication.class, args);
 	}
 
-	/*@Bean
-	@Qualifier
+	@Bean
 	public FilterRegistrationBean requestAcessFilter(){
 		FilterRegistrationBean filterRegistrationBean= new FilterRegistrationBean();
-		filterRegistrationBean.setFilter(new RequestAcessFilter(frontendService));
-		filterRegistrationBean.addUrlPatterns("/api/v1/admin/*");
+		filterRegistrationBean.setFilter(new PropertyPosterWebControllerFilter(frontendService));
+		filterRegistrationBean.addUrlPatterns("/property-owner1/*");
 		return filterRegistrationBean;
 	}
-*/
+
 	@Bean
 	public FilterRegistrationBean adminWebFilter(){
 		FilterRegistrationBean filterRegistrationBean= new FilterRegistrationBean();

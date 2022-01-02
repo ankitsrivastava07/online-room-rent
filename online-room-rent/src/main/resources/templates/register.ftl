@@ -48,7 +48,6 @@
                     <input type="password" name="confirmPassword" id="confirmPassword" class="input-text" placeholder="Please enter your confirm password">
                     <i class="fas fa-lock"></i>
                 </div>
-
 				<div class="form-row-last">
 					<input type="submit" name="register" class="register" value="Register">
 				</div>
@@ -57,6 +56,7 @@
 	</div>
 	  <script src="/admin/js/jquery.min.js"></script>
   <script src="/admin/js/validate.js"></script>
+  <script src="/admin-ui/js/cookie.js"></script>
   <script src="/owner-register/js/register.js"></script>
 
 </body>

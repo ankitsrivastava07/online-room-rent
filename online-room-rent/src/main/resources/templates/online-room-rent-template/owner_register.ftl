@@ -1,7 +1,7 @@
 <html lang="en"><head>
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow">
-    <title>Login &amp; Signup forms in panel - Bootsnipp.com</title>
+    <title> Signup </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style>
@@ -96,10 +96,11 @@
                                 </form>
                                 <div style="border-top: 1px solid #999; padding-top:20px" class="form-group">
                                  <div class="col-md-offset-3 col-md-9" style="color: gray;">
-                                    Already have an account?<a href="/property/login">Sign In here</a>
+                                    Already have an account?<a href="/property-owner/login">Sign In here</a>
                                 </div>
                              </div>
 <script src="/online-room-rent/assets/vendor/validate.js"></script>
+<script src="/admin-ui/js/cookie.js"></script>
 <script src="/online-room-rent/assets/vendor/register.js"></script>
 </body>
 </html>

@@ -72,15 +72,27 @@ function register(formData) {
                         $(".alert").html(response.message);
              }
             }, 500);
+            if(response.status){
+            if (!!$.cookie('session_Token')) {
+            $.cookie("session_Token",response.accessToken)
+            $.cookie("browser",response.browser)
+            }
+            else{
+            $.cookie("session_Token",response.accessToken)
+            $.cookie("browser",response.browser)
+            }
+           window.location.href="/property-owner"+response.redirectUri;
+            }
 			},
 		error: function(error) {
 		$(".alert").remove("");
+		$(".error").remove("");
 		setTimeout(function() {
-		if (error.status==400 && $(".alert").length == 0) {
-                $('email').after('<div class="alert alert-danger">'+error.responseJSON.message+'</div>');
-            } else{
-                $(".email").html(error.responseJSON.message);
-     }
+		if (error.status==400 && $(".error").length == 0) {
+         $('#email').after('<span class="error">'+error.responseJSON.message+'</span>');
+          } else{
+            $("#email").html(error.responseJSON.message);
+          }
 	}, 500);
      }
 })

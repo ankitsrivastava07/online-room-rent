@@ -29,7 +29,7 @@ $(document).ready(function() {
 		   },
 		   lastName:{
    		   	required: "Please enter your last name",
-	   },
+	        },
 			email: {
 				required: "Please enter your email",
 			},
@@ -77,16 +77,15 @@ function register(formData) {
 			},
 		error: function(error) {
 		$(".alert").remove("");
-		setTimeout(function() {
-		if (error.status==400 && $(".alert").length == 0) {
-                $('email').after('<div class="alert alert-danger">'+error.responseJSON.message+'</div>');
-            } else{
-                $(".email").html(error.responseJSON.message);
-     }
-	}, 500);
+        setTimeout(function() {
+        if (error.status==400 && $(".alert").length == 0) {
+              $('#email').after('<span class="error">'+error.responseJSON.message+'</span>');
+                } else{
+                $("#email").html(error.responseJSON.message);
+             }
+        	}, 500);
      }
 })
-		//return true;
 	}
 	return false;
 }

@@ -14,6 +14,7 @@ public class ApiResponse {
     private String message;
     private Boolean status;
     private String accessToken;
+    private String redirectUri;
     @JsonIgnore
     private String role;
 }

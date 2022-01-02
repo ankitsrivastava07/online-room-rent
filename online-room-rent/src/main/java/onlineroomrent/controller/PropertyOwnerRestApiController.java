@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RequestMapping("api/v1/property-owner")
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.net.URI;
+
+@RequestMapping("api/v1/property")
 @RestController
 public class PropertyOwnerRestApiController {
     @Autowired
@@ -23,7 +27,7 @@ public class PropertyOwnerRestApiController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerOwner(@RequestBody @Valid RegisterRequest registerRequest){
+    public ResponseEntity<?> registerOwner(@RequestBody @Valid RegisterRequest registerRequest, HttpServletRequest request){
         ApiResponse apiResponse= frontendService.registerOwner(registerRequest);
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
