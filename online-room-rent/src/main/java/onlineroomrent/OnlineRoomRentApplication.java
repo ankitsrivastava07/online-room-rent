@@ -30,7 +30,7 @@ public class OnlineRoomRentApplication {
 	public FilterRegistrationBean requestAcessFilter(){
 		FilterRegistrationBean filterRegistrationBean= new FilterRegistrationBean();
 		filterRegistrationBean.setFilter(new PropertyPosterWebControllerFilter(frontendService));
-		filterRegistrationBean.addUrlPatterns("/property-owner1/*");
+		filterRegistrationBean.addUrlPatterns("/property-owner/*");
 		return filterRegistrationBean;
 	}
 
