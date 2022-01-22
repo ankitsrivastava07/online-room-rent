@@ -25,7 +25,7 @@ public class AuthenticateUser implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String emailOrMobile = authentication.getPrincipal().toString();
         String password = authentication.getCredentials().toString();
-        ApiResponse apiResponse=frontendService.login(emailOrMobile,password);
+        ApiResponse apiResponse=frontendService.adminLogin(emailOrMobile,password);
         UserAuthentication userAuthentication= new UserAuthentication();
         Authentication authentication1=new UsernamePasswordAuthenticationToken(emailOrMobile,password, adminRepository.findByEmailOrMobile(emailOrMobile).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication1);

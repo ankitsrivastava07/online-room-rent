@@ -97,7 +97,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/admin/add-category">
+                <a class="nav-link " href="/admin/add-property-category">
                   <i class="material-icons">vertical_split</i>
                   <span>Add Property Category</span>
                 </a>

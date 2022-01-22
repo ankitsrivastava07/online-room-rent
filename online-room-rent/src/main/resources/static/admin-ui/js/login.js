@@ -37,21 +37,21 @@ function login(formData) {
 				$(".alert").remove();
                 setTimeout(function() {
                 if ($(".alert").length == 0) {
-                     $('h3').after('<div class="alert alert-danger">'+response.message+'</div>');
-                    } else{
-                     $(".alert").html(response.message);
+             $('h3').after('<div class="alert alert-danger">'+response.message+'</div>');
+            } else{
+             $(".alert").html(response.message);
              }
             }, 500);
             if(response.status==true){
             if (!!$.cookie('session_Token')) {
- 	    	$.cookie("session_Token",response.accessToken)
- 	    	$.cookie("browser",response.browser)
+                $.cookie("session_Token",response.accessToken)
+                $.cookie("browser",response.browser)
  	    	}
  	    	else{
- 	    	$.cookie("session_Token",response.accessToken)
- 	    	$.cookie("browser",response.browser)
+            $.cookie("session_Token",response.accessToken)
+            $.cookie("browser",response.browser)
  	    	}
-           	location.reload();
+ 	    	window.location.href="/admin"
        	     }
 			},
 		error: function(error) {
@@ -61,7 +61,7 @@ function login(formData) {
                 $('h3').after('<div class="alert alert-danger">'+error.responseJSON.message+'</div>');
             } else{
                 $(".alert").html(error.responseJSON.message);
-     }
+            }
 	}, 500);
      }
       })

@@ -14,7 +14,7 @@ function addCategory(formData){
 	if ($("#addCategory").valid() && checkConnection()) {
 		$.ajax({
 			type: "POST",
-			url: "/api/v1/admin/add-category",
+			url: "/api/v1/admin/add-property-category",
 			contentType: "application/json",
 			data: JSON.stringify(formData),
         	beforeSend: function(request) {
@@ -31,7 +31,7 @@ function addCategory(formData){
              }
             }, 500);
             if(response.status==true){
-           	location.reload();
+           	window.location.href="";
        	     }
 		},
 		error: function(error) {
@@ -42,10 +42,12 @@ function addCategory(formData){
 			$({to:0}).animate({to:1}, duration, function() {
   			if ($(".err-401").length == 0) {
 			$('h3').after('<div class="alert alert-danger" id="err-401">'+error.responseJSON.message+'</div>');
+			location.reload();
   			}else{
   				$("#err-401").html("");
+  				location.reload();
   			}
-			})
+			});
        }
 		setTimeout(function() {
 		 $.each( error.responseJSON.error, function(index, value){
@@ -82,7 +84,7 @@ $(document).ready(function() {
 		},
 		submitHandler: function(form) {
 			var formData = {
-				"categoryName": $("#categoryName").val(),
+				"name": $("#categoryName").val(),
 				"slugName": $("#slugName").val(),
 				"description" : $("#description").val()
 			}

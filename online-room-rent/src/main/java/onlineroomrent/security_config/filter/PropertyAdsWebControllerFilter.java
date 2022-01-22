@@ -1,37 +1,34 @@
 package onlineroomrent.security_config.filter;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import onlineroomrent.constant.OnlineRoomRentConstant;
 import onlineroomrent.dao.entity.JwtTokenEntity;
 import onlineroomrent.dto.TokenStatus;
+import onlineroomrent.jwtUtil.JwtAccessTokenUtil;
 import onlineroomrent.service.FrontendService;
 import onlineroomrent.tenant.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-
-public class PropertyPosterWebControllerFilter implements Filter {
-
+public class PropertyAdsWebControllerFilter implements Filter {
     @Autowired
     FrontendService frontendService;
-
-    public PropertyPosterWebControllerFilter(FrontendService frontendService){
+    @Autowired
+    JwtAccessTokenUtil jwtAccessTokenUtil;
+    public PropertyAdsWebControllerFilter(FrontendService frontendService){
         this.frontendService=frontendService;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
         HttpServletRequest httpServletRequest= (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse= (HttpServletResponse)servletResponse;
         String uri=httpServletRequest.getRequestURI();
-
         Cookie cookies[] = httpServletRequest.getCookies();
         if(cookies==null && !(uri.equals("/property-owner/login") || uri.equals("/property-owner/register"))){
             httpServletResponse.sendRedirect("/property-owner/login");
@@ -54,15 +51,27 @@ public class PropertyPosterWebControllerFilter implements Filter {
         JwtTokenEntity entity=null;
         if(jwt==null)
             return false;
-        else if ((entity=frontendService.isValidToken(jwt))!=null){
+        else if (frontendService.isValidToken(jwt, OnlineRoomRentConstant.User_TOKEN_KEY)){
             TokenStatus tokenStatus = new TokenStatus();
-            tokenStatus.setStatus(entity.getActive());
-            tokenStatus.setAccessToken(entity.getAccessToken());
-            tokenStatus.setUserName(entity.getUserName());
+            tokenStatus.setStatus(Boolean.TRUE);
+            tokenStatus.setAccessToken(jwt);
             TenantContext.setTenantContext(tokenStatus);
             return true;
         }
         return false;
     }
 
+    public String getTokenIdentity(String accessToken,String value){
+        try {
+            Base64.Decoder decoder = Base64.getUrlDecoder();
+            String[] parts = accessToken.split("\\."); // Splitting header, payload and signature
+            String payload = new String(decoder.decode(parts[1]));
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> map = mapper.readValue(payload, Map.class);
+            return String.valueOf(map.get(value));
+        }catch (JsonProcessingException exception){
+            exception.printStackTrace();
+        }
+        return null;
+    }
 }

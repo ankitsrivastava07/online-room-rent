@@ -3,15 +3,20 @@ package onlineroomrent.dao.entity.country;
 import lombok.Getter;
 import lombok.Setter;
 import onlineroomrent.dao.entity.BaseEntity;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 @Table(name="country")
 @Entity
 @Getter
 @Setter
-public class CountryEntity extends BaseEntity {
-    private String name;
+public class CountryEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String country;
+    @Column(name="country_code")
     private String countryCode;
-    private String phonecode;
+    @Column(name="phone_code")
+    private String phoneCode;
 }

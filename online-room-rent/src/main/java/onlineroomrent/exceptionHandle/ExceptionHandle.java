@@ -1,17 +1,13 @@
 package onlineroomrent.exceptionHandle;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import onlineroomrent.constant.OnlineRoomRentConstant;
 import onlineroomrent.dto.ApiResponse;
 import onlineroomrent.error.ApiError;
-import onlineroomrent.exceptionHandle.exception.AccountBlockedException;
-import onlineroomrent.exceptionHandle.exception.EmailAlreadyExistException;
-import onlineroomrent.exceptionHandle.exception.MobileAlreadyExist;
-import onlineroomrent.exceptionHandle.exception.UserNameNotFoundException;
+import onlineroomrent.exceptionHandle.exception.*;
+import onlineroomrent.validation.ValidationError;
 import onlineroomrent.validation.ValidationFailed;
 import onlineroomrent.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +18,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 @ControllerAdvice
 public class ExceptionHandle {
@@ -48,6 +44,16 @@ public class ExceptionHandle {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> validationErrors(MethodArgumentNotValidException exception){
+        ValidationFailed validationFailed = new ValidationFailed();
+        validationFailed.setErrorCode(HttpStatus.BAD_REQUEST.value());
+        validationFailed.setMessage("Validation Failed");
+        validationFailed.setError(validationUtil.getAllErrors(exception.getFieldErrors()));
+        validationFailed.setValidationFailed(Boolean.TRUE);
+        return new ResponseEntity<>(validationFailed, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(org.springframework.validation.BindException.class)
+    public ResponseEntity<?> bindingException(org.springframework.validation.BindException exception){
         ValidationFailed validationFailed = new ValidationFailed();
         validationFailed.setErrorCode(HttpStatus.BAD_REQUEST.value());
         validationFailed.setMessage("Validation Failed");
@@ -93,14 +99,31 @@ public class ExceptionHandle {
 
     @ExceptionHandler(EmailAlreadyExistException.class)
     public ResponseEntity<?> emailAlreadyExist(EmailAlreadyExistException exception){
-    ApiError apiError = new ApiError(Boolean.FALSE,HttpStatus.BAD_REQUEST.toString(), exception.getMessage());
+        ApiError apiError = new ApiError(Boolean.FALSE,HttpStatus.BAD_REQUEST.toString(), exception.getMessage());
+        apiError.setValidationFailed(Boolean.TRUE);
+        ValidationError validationError = new ValidationError();
+        validationError.setMessage(exception.getMessage());
+        validationError.setFieldName("email");
+        validationError.setRejectedValue(exception.getEmail());
+        apiError.setError(Arrays.asList(validationError));
         return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MobileAlreadyExist.class)
     public ResponseEntity<?> mobileAlreadyExist(MobileAlreadyExist exception){
         ApiError apiError = new ApiError(Boolean.FALSE,HttpStatus.BAD_REQUEST.toString(), exception.getMessage());
+        ValidationError validationError = new ValidationError();
+        apiError.setValidationFailed(Boolean.TRUE);
+        validationError.setMessage(exception.getMessage());
+        validationError.setFieldName("mobile");
+        validationError.setRejectedValue(exception.getMobile());
+        apiError.setError(Arrays.asList(validationError));
         return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(OTPMaxLimitExceedException.class)
+    public ResponseEntity<?> otpLimitExceedException(OTPMaxLimitExceedException exception){
+        ApiError apiError = new ApiError(Boolean.FALSE,HttpStatus.BAD_REQUEST.toString(), exception.getMessage());
+        return new ResponseEntity<>(apiError,HttpStatus.BAD_REQUEST);
+    }
 }

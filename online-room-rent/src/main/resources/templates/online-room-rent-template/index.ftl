@@ -24,7 +24,6 @@
 }
   </style>
 </head>
-
 <body>
   
  <!-- ======= Header ======= -->
@@ -147,172 +146,38 @@
 </div>
 <div class="container">
 	<div class="row">
-<h2>Popular Owner Properties</h2>
+<h2>Popular Properties</h2>
 </div>
 </div>
     <!-- Topic Cards -->
     <div id="cards_landscape_wrap-2" >
+    <div class="container-fluid">
+        <div class="row">
+        <div id="cards_landscape_wrap-2">
         <div class="container-fluid">
             <div class="row">
-              
-                <div id="cards_landscape_wrap-2">
-        <div class="container-fluid">
-            <div class="row">
+                <#list dtos as dto>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <a href="">
-                        <div class="card-flyer" style="width: 20rem;">
-                            <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg">
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                        2 BHK                                     
-                                        Builder Floor Apartment											
-							         
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
-                        <div class="card-flyer" style="width: 20rem;">
+                        <div class="card-flyer" style="width: 18rem;">
                             <div class="text-box">
                                 <div class="image-box">
                                     <img src="online-room-rent/assets/img/6.jpg" alt="" />
                                 </div>
                                 <div class="text-container">
                                     <span class="text-dark">         
-                                      Palm Greens Apartment
-                                      by CIETD Pvt Ltd										
-							         
+                                      ${dto.title}
                                     </span>
                                     <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
+                                    <p>${dto.address.address}, ${dto.address.city}, ${dto.address.state}, ${dto.address.country}
                                   <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
-           
-                
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
-                        <div class="card-flyer" style="width: 20rem;">
-                            <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg">
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                        2 BHK                                     
-                                        Builder Floor Apartment											
-							         
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
-                        <div class="card-flyer">
-                            <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg" alt="" />
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                        2 BHK                                     
-                                        Builder Floor Apartment											
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
-                        <div class="card-flyer">
-                            <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg" alt="" />
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                        2 BHK                                     
-                                        Builder Floor Apartment											
-							         
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
-                        <div class="card-flyer">
-                            <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg" alt="" />
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                        2 BHK                                     
-                                        Builder Floor Apartment											
-							         
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
-                        <div class="card-flyer">
-                            <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg" alt="" />
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                        2 BHK                                     
-                                        Builder Floor Apartment											
-							         
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>Kapil Nagar,Nagpur  </p>
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-           
-            </div>
-        </div>
-    </div>
-
+               </#list>
   </main><!-- End #main -->
-
   <!-- ======= Footer ======= -->
   <footer id="footer">
     <div class="footer-top">

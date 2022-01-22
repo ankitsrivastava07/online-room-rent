@@ -1,8 +1,9 @@
 package onlineroomrent.security_config.filter;
-
 import onlineroomrent.constant.OnlineRoomRentConstant;
 import onlineroomrent.dao.entity.JwtTokenEntity;
+import onlineroomrent.dto.TokenStatus;
 import onlineroomrent.service.FrontendService;
+import onlineroomrent.tenant.TenantContext;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
 @Component
 public class TokenValidatorFilter implements Filter {
     @Autowired
@@ -29,7 +29,7 @@ public class TokenValidatorFilter implements Filter {
         HttpServletResponse httpServletResponse= (HttpServletResponse)servletResponse;
         String uri=httpServletRequest.getRequestURI();
         String jwt=httpServletRequest.getHeader("Authentication");
-        if(!isSessionExpired(jwt) && !(uri.equals("/api/v1/admin/login"))) {
+        if(!uri.equals("/api/v1/property/owner/register") && !uri.equals("/api/v1/property/login") && !isSessionExpired(jwt) && !(uri.equals("/api/v1/admin/login"))) {
             httpServletResponse.setContentType("application/json");
             PrintWriter writer = httpServletResponse.getWriter();
             Map<String,Object> map = new HashMap<>();
@@ -45,11 +45,17 @@ public class TokenValidatorFilter implements Filter {
     }
     private boolean isSessionExpired(String jwt){
         JwtTokenEntity entity=null;
+        TokenStatus tokenStatus = new TokenStatus();
         if(jwt==null)
             return false;
-        else if ((entity=frontendService.isValidToken(jwt))!=null){
+        else if (frontendService.isValidToken(jwt,OnlineRoomRentConstant.User_TOKEN_KEY)){
+            tokenStatus.setStatus(Boolean.TRUE);
+            tokenStatus.setAccessToken(jwt);
+            tokenStatus.setUserName(frontendService.findById(jwt));
+            TenantContext.setTenantContext(tokenStatus);
             return true;
         }
+        TenantContext.setTenantContext(tokenStatus);
         return false;
     }
 

@@ -23,6 +23,8 @@ public interface DaoService {
     void saveRole(Role role);
 
     UserEntity registerUser(UserEntity userEntity);
+    String findById(Long id);
+    UserEntity findByEmailOrMobile(String email, String mobile);
 
-    UserEntity findByEmailOrMobile(String email,String mobile);
+    List<Role> findAllRole();
 }

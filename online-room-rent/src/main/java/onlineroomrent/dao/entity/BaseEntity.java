@@ -1,22 +1,19 @@
 package onlineroomrent.dao.entity;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import onlineroomrent.constant.OnlineRoomRentConstant;
 import onlineroomrent.dao.repository.AdminRepository;
-import org.hibernate.annotations.Where;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
-@SqlResultSetMapping(name="")
 public class BaseEntity {
-   // @Autowired
-   // private AdminRepository adminRepository;
-
+    @Transient
+    private AdminRepository adminRepository;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

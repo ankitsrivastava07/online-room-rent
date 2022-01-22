@@ -17,6 +17,18 @@
     .form-horizontal .control-label {
         text-align: inherit;
     }
+    .error{
+        font-size: 12px;
+        color: #da534d;
+    }
+    .alert-danger{
+    text-align:center;
+    }
+    .alert {
+        padding: 15px;
+        border-radius: 4px;
+    }
+    *.padding-top: 0px;
         </style>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
@@ -47,24 +59,16 @@
                         <form id="loginform" class="form-horizontal" role="form">
                         <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="mobile" type="email" class="form-control" name="mobile" value="" placeholder="Please enter mobile number or email", required>
+                        <input id="emailOrMobile" type="text" class="form-control" name="mobile" value="" placeholder="Please enter mobile number or email", required>
                         </div>
                             <div style="margin-bottom: 25px" class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             <input id="password" type="password" class="form-control" name="password" placeholder="Please enter password",required>
                             </div>
-                            <div class="input-group">
-                              <div class="checkbox">
-                                <label>
-                                  <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
-                                </label>
-                              </div>
-                            </div>
                                 <div style="margin-top:10px" class="form-group">
                                     <!-- Button -->
                                     <div class="col-sm-12 controls">
-                                      <a id="btn-login" href="#" class="btn btn-success">Login  </a>
-                                      <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+                                      <input type="submit" class="btn btn-primary" value="Login">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -81,7 +85,10 @@
                         </div>
                     </div>
         </div>
-        <a href="" already="" have="" an="" account!="" <="" div="">
+          <script src="/admin-ui/js/cookie.js"></script>
+        <script src="/online-room-rent/assets/vendor/validate.js"></script>
+        <script src="/online-room-rent/assets/vendor/login.js"></script>
 </a></div>
+</form>
 </body>
 </html>

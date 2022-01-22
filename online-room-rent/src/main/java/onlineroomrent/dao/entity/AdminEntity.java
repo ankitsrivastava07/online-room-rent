@@ -23,28 +23,30 @@ public class AdminEntity implements UserDetails {
     private Boolean active=true;
     @Column(name="failed_attempt")
     private Integer failedAttempt=3;
-    @Column(nullable = false)
+    @Column(nullable = false, name="first_name")
     private String firstName;
+    @Column(nullable = false,name="last_name")
+    private String lastName;
     @Column(name="date_non_block")
     private Date nonBlockDate;
-    @Column(nullable = false)
+    @Column(nullable = false,name="is_block")
     private Boolean isBlock=Boolean.FALSE;
-    @Column(nullable = false)
+    @Column(nullable = false,name="max_attempt")
     private Integer maxAttempt=3;
-    @Column(nullable = false)
-    private String lastName;
-    @Column(nullable = false)
+    @Column(nullable = false,name="email")
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false,name="mobile")
     private String mobile;
-    @Column(nullable = false)
+    @Column(nullable = false,name="password")
     private String password;
-    @Column(nullable = false)
+    @Column(nullable = false,name="user_type")
     private String userType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="role",nullable = false)
     private Role role;
+    @Column(name = "created_at")
     private Date createdAt;
+    @Column(name = "updated_at")
     private Date updatedAt;
     @PrePersist
     public void prePersit(){

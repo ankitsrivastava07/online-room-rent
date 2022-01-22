@@ -1,49 +1,48 @@
 package onlineroomrent.dao.entity;
-
 import lombok.Getter;
 import lombok.Setter;
-import onlineroomrent.constant.OnlineRoomRentConstant;
-
 import javax.persistence.*;
 import java.util.Date;
-
-@Table(name="property_poster")
+import java.util.List;
+@Table(name="property_ads")
 @Entity
 @Getter
 @Setter
-public class PropertyPosterEntity {
+public class PropertyAdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String propertyType;
     @Column(nullable = false)
-    private Boolean isPopular=Boolean.FALSE;
+    private Boolean isPopular=Boolean.TRUE;
     @Column(nullable = false)
     private String description;
     private String sqrtFit;
     private String furnished;
     private String title;
-    private Integer numberOfRooms;
+    private String roomSet;
+    private String floor;
     private Date createdAt;
     private Date updatedAt;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "propertyAds")
+    private List<PropertyImages> images;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id",referencedColumnName = "id")
+    private AddressEntity address;
     @ManyToOne
-    @JoinColumn(name="address_id")
-    private AddressEntity addressEntity;
-
-    @ManyToOne
-    @JoinColumn(name="property_category_id")
+    @JoinColumn(name="category_id")
     private PropertyCategoryEntity categoryEntity;
-
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private UserEntity userId;
     @PrePersist
     public void prePersists(){
         this.createdAt=new Date();
     }
-
     @PreUpdate
     public void preUpdate(){
         this.updatedAt=new Date();
     }
-
 }

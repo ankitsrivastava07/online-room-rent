@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="roles")
+@Table(name="role")
 @Getter
 @Setter
 public class Role{
@@ -17,13 +17,14 @@ public class Role{
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(nullable = false,unique = true)
-    private String userType;
+    private String slugName;
+    private String name;
     @Column(nullable = false)
     private Boolean active;
     @Column(nullable = false)
     private String description;
     @OneToMany(mappedBy = "role",cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
-    @Column(nullable = false)
+    @Column(nullable = false,name="authorities")
     private List<UserGrantedAuthority> authorities;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="created_by",referencedColumnName = "id")

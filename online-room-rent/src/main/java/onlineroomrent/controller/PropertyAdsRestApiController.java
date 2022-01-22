@@ -1,34 +1,36 @@
 package onlineroomrent.controller;
 import onlineroomrent.dto.*;
 import onlineroomrent.service.FrontendService;
+import onlineroomrent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.URI;
-
 @RequestMapping("api/v1/property")
 @RestController
-public class PropertyOwnerRestApiController {
+public class PropertyAdsRestApiController {
     @Autowired
     FrontendService frontendService;
+    @Autowired
+    UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<?> userLogin(@RequestBody @Valid LoginDto loginDto) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        ApiResponse apiResponse=userService.findByEmailAndPassword(loginDto.getEmailOrMobile(),loginDto.getPassword());
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/owner/register")
     public ResponseEntity<?> registerOwner(@RequestBody @Valid RegisterRequest registerRequest, HttpServletRequest request){
-        ApiResponse apiResponse= frontendService.registerOwner(registerRequest);
+         ApiResponse apiResponse= frontendService.registerOwner(registerRequest);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
+
+    @PostMapping("/save-property")
+    public ResponseEntity<?> saveProperty(@Valid PostProperty postProperty, HttpServletRequest request){
+        ApiResponse apiResponse= frontendService.saveProperty(postProperty);
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 

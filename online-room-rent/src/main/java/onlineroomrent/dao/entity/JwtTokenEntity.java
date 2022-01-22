@@ -23,7 +23,7 @@ public class JwtTokenEntity {
     private Date createdAt;
     private Date updatedAt;
     private String tokenIdentity;
-    private Boolean active=Boolean.FALSE;
+    private Boolean active=Boolean.TRUE;
     private Date expireAt;
     private String userName;
 

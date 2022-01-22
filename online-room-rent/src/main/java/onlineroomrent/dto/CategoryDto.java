@@ -13,7 +13,7 @@ public class CategoryDto {
     private Boolean active;
     private Long adminId;
     @NotBlank(message = "Please enter valid category Name")
-    private String categoryName;
+    private String name;
     @NotBlank(message = "Please enter valid description")
     @Size(min = 10,max = 1000,message = "Please enter description at least 10 characters long and maximum 1000 characters")
     private String description;

@@ -1,9 +1,11 @@
 package onlineroomrent.controller;
+import onlineroomrent.constant.OnlineRoomRentConstant;
 import onlineroomrent.dto.*;
 import onlineroomrent.jwtUtil.JwtAccessTokenUtil;
 import onlineroomrent.service.FrontendService;
 import onlineroomrent.tenant.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,8 +35,17 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/add-category")
-    public ModelAndView tables(){
+    @GetMapping("/add-property-category")
+    public ModelAndView addCategory(){
+        TokenStatus tokenStatus=TenantContext.getCurrentTenant();
+        ModelAndView mv= new ModelAndView();
+        mv.addObject("Name",jwtAccessTokenUtil.getPrincipalFromToken(tokenStatus.getAccessToken(),"Name"));
+        mv.setViewName("admin-dashboard/add-category");
+        return mv;
+    }
+
+    @GetMapping("/add-user-category")
+    public ModelAndView userCategory(){
         TokenStatus tokenStatus=TenantContext.getCurrentTenant();
         ModelAndView mv= new ModelAndView();
         mv.addObject("Name",jwtAccessTokenUtil.getPrincipalFromToken(tokenStatus.getAccessToken(),"Name"));
@@ -62,8 +73,14 @@ public class AdminController {
     @GetMapping("/logout")
     public ModelAndView logOut() {
         TokenStatus tokenStatus=TenantContext.getCurrentTenant();
-        frontendService.invalidateToken(tokenStatus.getAccessToken());
+        frontendService.invalidateToken(tokenStatus.getAccessToken(), OnlineRoomRentConstant.Admin_TOKEN_KEY);
         return new ModelAndView("redirect:"+"/admin");
+    }
+
+    @GetMapping("/verify")
+    public ModelAndView verifyAdmin() {
+        TokenStatus tokenStatus=TenantContext.getCurrentTenant();
+        return new ModelAndView("admin-dashboard/verify_otp");
     }
 
     @GetMapping({"","/","/login"})

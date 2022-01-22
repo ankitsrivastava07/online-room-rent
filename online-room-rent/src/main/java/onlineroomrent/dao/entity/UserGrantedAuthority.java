@@ -1,23 +1,19 @@
 package onlineroomrent.dao.entity;
-
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
-
 @Table(name="users_authorities")
 @Entity
 @Getter
 @Setter
-public class UserGrantedAuthority {
-
+    public class UserGrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
     private Date createdAt;
     private Date updatedAt;
-    @Column(nullable = false)
     private String description;
     private Boolean active;
     private String accessRights;

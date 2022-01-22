@@ -12,16 +12,15 @@ import java.util.Date;
 public class PropertyCategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false,unique = true)
     private Long id;
     private Date createdAt;
     private Date updatedAt;
-    @Column(unique = true,nullable = false)
-    private String categoryName;
     private String description;
     @Column(nullable = false,unique = true)
     private String slugName;
     private String userType;
+    private String name;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="admin_id",referencedColumnName = "id")
     private AdminEntity admin;

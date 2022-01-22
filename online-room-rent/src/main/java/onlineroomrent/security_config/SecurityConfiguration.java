@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers( "/favicon/**","/fonts/**","/admin-ui/**","/owner-register/**","/owner-register/**","/online-room-rent/**");
+        webSecurity.ignoring().antMatchers( "/favicon/**","/fonts/**","/admin-ui/**","/owner-register/**","/online-room-rent/**");
     }
 
     @Bean

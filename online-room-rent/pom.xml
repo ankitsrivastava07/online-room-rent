@@ -17,6 +17,22 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 	</properties>
+	<repositories>
+
+		<repository>
+			<id>atlassian-public-twi</id>
+			<url>https://mvnrepository.com/artifact/com.twilio.sdk/twilio</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+		</repository>
+	</repositories>
 	<dependencies>
 
 		<dependency>
@@ -30,6 +46,12 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
 			<version>0.11.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.12.135</version>
 		</dependency>
 
 		<dependency>
@@ -105,8 +127,14 @@
             <artifactId>json</artifactId>
             <version>20160212</version>
         </dependency>
+		<dependency>
+			<groupId>com.twilio</groupId>
+			<artifactId>twilio-android-env</artifactId>
+			<version>1.1.0</version>
+			<scope>compile</scope>
+		</dependency>
 
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>

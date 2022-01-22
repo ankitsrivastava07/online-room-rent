@@ -67,7 +67,18 @@ public class DaoServiceImpl implements DaoService{
     }
 
     @Override
-    public UserEntity findByEmailOrMobile(String email,String mobile) {
-         return userRepository.findByEmailOrMobile(email,mobile);
+    public String findById(Long id) {
+        String firstName=adminRepository.findById(id).get().getFirstName();
+        return firstName;
+    }
+
+    @Override
+    public UserEntity findByEmailOrMobile(String email, String mobile) {
+        return userRepository.findByEmailOrMobile(email, mobile);
+    }
+
+    @Override
+    public List<Role> findAllRole() {
+        return userRoleRepository.findUsersRole("Admin");
     }
 }

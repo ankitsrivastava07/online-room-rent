@@ -1,29 +1,27 @@
 package onlineroomrent.dao.entity;
-
 import lombok.Getter;
 import lombok.Setter;
 import onlineroomrent.dao.entity.country.CityEntity;
 import onlineroomrent.dao.entity.country.CountryEntity;
 import onlineroomrent.dao.entity.country.StateEntity;
-
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Table(name="property_addess")
+import onlineroomrent.dao.repository.AdminRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.*;
+@Table(name="address")
 @Entity
 @Getter
 @Setter
 public class AddressEntity extends BaseEntity{
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="city_id")
-    private CityEntity cityEntity;
-    @ManyToOne
+    private CityEntity city;
+    @OneToOne
     @JoinColumn(name="state_id")
-    private StateEntity stateEntity;
-    @ManyToOne
+    private StateEntity state;
+    @OneToOne
     @JoinColumn(name="country_id")
-    private CountryEntity countryEntity;
+    private CountryEntity country;
+    @Column(name="address",nullable = false)
+    private String address;
+    private String pinCode;
 }

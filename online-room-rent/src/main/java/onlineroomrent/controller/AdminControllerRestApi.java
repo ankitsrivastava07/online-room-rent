@@ -1,12 +1,10 @@
 package onlineroomrent.controller;
-
 import onlineroomrent.dto.*;
 import onlineroomrent.service.FrontendService;
 import onlineroomrent.service.UserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
-
-@RequestMapping("/api/v1/admin")
+@RequestMapping("api/v1/admin")
 @RestController
 public class AdminControllerRestApi {
     @Autowired FrontendService frontendService;
@@ -32,7 +29,7 @@ public class AdminControllerRestApi {
     }
 
   //  @PreAuthorize("hasAuthority('SYSTEM_ADMIN')")
-    @PostMapping("/add-category")
+    @PostMapping("/add-property-category")
     public ResponseEntity<?> addCategory(@RequestBody @Valid CategoryDto categoryDto){
         ApiResponse apiResponse= frontendService.updateCategory(categoryDto);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
@@ -44,4 +41,9 @@ public class AdminControllerRestApi {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
+    @PostMapping("/otp-verify")
+    public ResponseEntity<?> verifyOTP(@RequestBody @Valid VerifyOTP verifyOTP){
+        ApiResponse apiResponse= frontendService.verfiyOtp(verifyOTP);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
 }

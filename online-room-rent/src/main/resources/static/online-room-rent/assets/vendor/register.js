@@ -49,7 +49,8 @@ $(document).ready(function() {
 			"email":     $("#email").val(),
 			"mobile":    $("#mobile").val(),
 			"password":  $("#password").val(),
-			"confirmPassword" : $("#confirmPassword").val()
+			"confirmPassword" : $("#confirmPassword").val(),
+			"roleId": $('input[name="iam"]:checked').val()
 			}
 			register(formData);
 		}
@@ -60,7 +61,7 @@ function register(formData) {
 	if ($("#registerForm").valid() && checkConnection()) {
 		$.ajax({
 			type: "POST",
-			url: "/api/v1/property/register",
+			url: "/api/v1/property/owner/register",
 			contentType: "application/json",
 			data: JSON.stringify(formData),
 			success: function(response) {
@@ -88,11 +89,11 @@ function register(formData) {
 		$(".alert").remove("");
 		$(".error").remove("");
 		setTimeout(function() {
-		if (error.status==400 && $(".error").length == 0) {
-         $('#email').after('<span class="error">'+error.responseJSON.message+'</span>');
-          } else{
-            $("#email").html(error.responseJSON.message);
-          }
+        if (error.status==400 && error.responseJSON.validationFailed && $(".alert").length == 0) {
+			jQuery.each(error.responseJSON.error, function(index, item) {
+              $('#'+item.fieldName).after('<span class="error">'+item.message+'</span>');
+			});
+    	}
 	}, 500);
      }
 })
@@ -112,3 +113,4 @@ $.ajax('/api/v1/admin/check-connection', {
 });
 return true;
 }
+

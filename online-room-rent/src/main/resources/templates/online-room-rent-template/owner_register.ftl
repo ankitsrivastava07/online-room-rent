@@ -40,7 +40,7 @@
 <body>
      <div class="container">
         <div id="signupbox" style="display:block; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form id="registerForm" class="form-horizontal" name="registerForm">
+        <form id="registerForm" class="form-horizontal" name="registerForm" novalidate="novalidate">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="panel-title">Sign Up</div>
@@ -65,13 +65,13 @@
                         <div class="form-group">
                             <label for="email" class="col-md-3 control-label">Email</label>
                             <div class="col-md-9">
-                             <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
+                             <input type="email" class="form-control error" id="email" name="email" placeholder="Email Address" aria-invalid="true"><label id="email-error" class="error" for="email">Please enter a valid email address.</label>
                                </div>
                              </div>
                                 <div class="form-group">
                                     <label for="password" class="col-md-3 control-label">Password</label>
                                     <div class="col-md-9">
-                                     <input type="password" class="form-control" id="password" name="passwd" placeholder="Password">
+                                     <input type="password" class="form-control valid" id="password" name="passwd" placeholder="Password" aria-invalid="false">
                                  </div>
                                 </div>
                                 <div class="form-group">
@@ -80,6 +80,14 @@
                                  <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
                              </div>
                             </div>
+                        <div class="form-group">
+                            <label for="icode" class="col-md-3 control-label">I am</label>
+                            <div class="col-md-9">
+                           <#list userRoles as role>
+                              <input style="opacity: 3;" value="${role.id}" name="iam" type="radio" required>${role.name}
+                          </#list>
+                         </div>
+                          </div>
                                 <div class="form-group">
                                     <label for="icode" class="col-md-3 control-label">Mobile number</label>
                                     <div class="col-md-9">
@@ -93,7 +101,7 @@
                                         <span style="margin-left:8px;">Or</span>
                                     </div>
                                 </div>
-                                </form>
+
                                 <div style="border-top: 1px solid #999; padding-top:20px" class="form-group">
                                  <div class="col-md-offset-3 col-md-9" style="color: gray;">
                                     Already have an account?<a href="/property-owner/login">Sign In here</a>
@@ -102,5 +110,5 @@
 <script src="/online-room-rent/assets/vendor/validate.js"></script>
 <script src="/admin-ui/js/cookie.js"></script>
 <script src="/online-room-rent/assets/vendor/register.js"></script>
-</body>
-</html>
+
+</div></div></form></div></div></body></html>

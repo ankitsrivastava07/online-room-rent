@@ -28,6 +28,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         exception.printStackTrace();
         String uri=request.getRequestURI();
-        response.getOutputStream().println("{ \"error\": \"" + exception.getMessage() + "\" }");
+        response.getOutputStream().println("{ \"error\": \"" + "Access Denied by the server" + "\" }");
     }
 }

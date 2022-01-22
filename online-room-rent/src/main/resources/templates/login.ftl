@@ -22,7 +22,7 @@
 }
 </style>
 	</head>
-	<body>
+	<body id="verify">
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -53,7 +53,7 @@
 	        </div>
     		</div>
 		</div>
-		</div>
+   	</div>
 	</section>
   <script src="/admin-ui/js/jquery.min.js"></script>
   <script src="/admin-ui/js/popper.js"></script>
@@ -61,6 +61,6 @@
   <script src="/admin-ui/js/validate.js"></script>
   <script src="/admin-ui/js/cookie.js"></script>
   <script src="/admin-ui/js/login.js"></script>
-	</body>
+</body>
 </html>
 
