@@ -2,6 +2,8 @@ package onlineroomrent.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 @Service
@@ -56,8 +59,17 @@ public class FrontendServiceImpl implements FrontendService {
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired PropertyAdsRepository propertyAdsRepository;
+    private List<String>fileExtension= new ArrayList<>();
+    private Integer fileSize=5242880;
     @Autowired
     PropertyAdsRepository adsRepository;
+
+    public FrontendServiceImpl(){
+        fileExtension.add("image/jpg");
+        fileExtension.add("image/jpeg");
+        fileExtension.add("image/png");
+        fileExtension.add("image/gif");
+    }
 
     public Integer saveFailedAttempt(String emailOrMobile) {
         AdminEntity adminEntity = daoService.getUser(emailOrMobile);
@@ -128,8 +140,8 @@ public class FrontendServiceImpl implements FrontendService {
             throw new EmailAlreadyExistException("Some one already taken this email", entity.getEmail());
         else if ((entity = daoService.findByEmailOrMobile(null, registerRequest.getMobile())) != null)
             throw new MobileAlreadyExist("Mobile number already registered", entity.getMobile());
-        Role role = userRoleRepository.findById(registerRequest.getRoleId()).get();
         UserEntity userEntity = dtoToEntityConvertor.convertToEntity(registerRequest, UserEntity.class);
+        Role role=userRoleRepository.findByName(registerRequest.getRole());
         userEntity.setCreatedBy(role.getAdminEntity().getId());
         userEntity.setRole(role);
         ApiResponse apiResponse = new ApiResponse();
@@ -324,7 +336,10 @@ public class FrontendServiceImpl implements FrontendService {
     @Override
     @Transactional
     public ApiResponse saveProperty(PostProperty postProperty) {
-        ApiResponse apiResponse = new ApiResponse();
+       ApiResponse apiResponse=null;
+        if(!(apiResponse=isValidFileFormat(postProperty.getImage1())).getIsValidFile() || !(apiResponse=isValidFileFormat(postProperty.getImage2())).getIsValidFile()){
+            return apiResponse;
+        }
         PropertyAdsEntity entity = dtoToEntityConvertor.convertToEntity(postProperty,PropertyAdsEntity.class);
         PropertyCategoryEntity entity1=propertyCategoryRepository.findById(postProperty.getProductCategory()).get();
         entity.setCategoryEntity(entity1);
@@ -344,6 +359,20 @@ public class FrontendServiceImpl implements FrontendService {
         return apiResponse;
     }
 
+    private ApiResponse isValidFileFormat(MultipartFile image1) {
+        ApiResponse apiResponse = new ApiResponse();
+        for(String fileFormat:fileExtension){
+           if(fileFormat.equalsIgnoreCase(image1.getContentType())){
+               apiResponse.setIsValidFile(Boolean.TRUE);
+               return apiResponse;
+            }
+        }
+        apiResponse.setStatus(Boolean.FALSE);
+        apiResponse.setMessage("Invalid file saint , Allowed files are jpeg,jpg,png,svg 5MB size");
+        apiResponse.setIsValidFile(Boolean.FALSE);
+        return apiResponse;
+    }
+
     @Override
     public List<PropertyAdsDto> findAllPropertyAds() {
         List<PropertyAdsEntity> entity=adsRepository.findAll();
@@ -357,15 +386,16 @@ public class FrontendServiceImpl implements FrontendService {
             PropertyImages propertyImages1 = new PropertyImages();
             propertyImages1.setContentType(image.getContentType());
             propertyImages1.setFileName(image.getOriginalFilename());
-            propertyImages1.setBucketName(this.bucketName);
+            propertyImages1.setBucketName(this.bucketName+'/'+OnlineRoomRentConstant.AWS_BUCKET_NAME);
             propertyImages1.setPropertyAds(adsEntity);
             File file = new File(imageName);
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
             outputStream.write(image.getBytes());
             AmazonS3Client amazonS3Client=(AmazonS3Client)amazonS3;
-            amazonS3.putObject(bucketName, imageName, file);
-            S3Object s3Object = amazonS3.getObject(bucketName, imageName);
-            propertyImages1.setBucketUrl(amazonS3Client.getResourceUrl(bucketName,imageName));
+            amazonS3Client.putObject(new PutObjectRequest(bucketName+'/'+OnlineRoomRentConstant.AWS_BUCKET_NAME,imageName,file).withCannedAcl(CannedAccessControlList.PublicRead));
+            S3Object s3Object = amazonS3.getObject(bucketName+'/'+OnlineRoomRentConstant.AWS_BUCKET_NAME, imageName);
+            String fileAccessUrl="https://online-room-rent.s3.ap-south-1.amazonaws.com/images/"+imageName;
+            propertyImages1.setBucketUrl(fileAccessUrl);
             if(adsEntity.getImages()==null) {
                 List<PropertyImages>list = new ArrayList<>();
                 list.add(propertyImages1);

@@ -25,6 +25,6 @@ public class RegisterRequest {
     @NotBlank(message = "Please enter valid confirm password")
     @Size(min=6,max = 30,message = "Please enter Confirm password atleast 6 characters and maximum 30 characters long")
     private String confirmPassword;
-    @NotNull(message = "Please enter valid role id")
-    private Long roleId;
+    @NotNull(message = "Please enter valid role ")
+    private String role;
 }

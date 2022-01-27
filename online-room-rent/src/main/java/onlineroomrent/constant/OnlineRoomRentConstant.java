@@ -1,4 +1,6 @@
 package onlineroomrent.constant;
+import java.util.ArrayList;
+import java.util.List;
 public class OnlineRoomRentConstant {
     public static final String ADMIN_USERTYPE="Admin";
     public static final String SYSTEM_ADMIN="SYSTEM_ADMIN";
@@ -7,7 +9,8 @@ public class OnlineRoomRentConstant {
     public static final String PROPERTY_OWNER="PROPERTY_OWNER";
     public static final String USER="USER";
     public static final int JWT_SESSION_EXPIRED = 20 * 60 * 1;
-    public static final String AWS_BUCKET_NAME="";
+    public static final String AWS_BUCKET_NAME="images";
     public static final String User_TOKEN_KEY = "User_Token";
     public static final String Admin_TOKEN_KEY = "Admin_Token";
+    public static final List<String> PROPERTY_TYPE= new ArrayList<>();
 }

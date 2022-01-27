@@ -136,9 +136,9 @@
     </div>
 </section>
   <main id="main">
-			</div>
-			</div>
-			<div class="container">
+    </div>
+    </div>
+    <div class="container">
  <div class="row">
 </div>
 </div>
@@ -161,19 +161,19 @@
                     <a href="">
                         <div class="card-flyer" style="width: 18rem;">
                             <div class="text-box">
-                                <div class="image-box">
-                                    <img src="online-room-rent/assets/img/6.jpg" alt="" />
-                                </div>
-                                <div class="text-container">
-                                    <span class="text-dark">         
-                                      ${dto.title}
-                                    </span>
-                                    <p class="rupees">₹24,000 | 720 SQT</p>			
-                                    <p>${dto.address.address}, ${dto.address.city}, ${dto.address.state}, ${dto.address.country}
-                                  <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
-                                </div>
+                            <div class="image-box">
+                                <img src="${dto.images[0].bucketUrl}" alt="" />
+                            </div>
+                            <div class="text-container">
+                                <span class="text-dark">
+                                  ${dto.title}
+                                </span>
+                                <p class="rupees">₹24,000 | 720 SQT</p>
+                                <p>${dto.address.address}, ${dto.address.city}, ${dto.address.state}, ${dto.address.country}
+                              <span id="btn" class="btn btn-primary" font-size=":10px;" style="border-radius: 65px">Read More</span>
                             </div>
                         </div>
+                    </div>
                     </a>
                 </div>
                </#list>
@@ -255,7 +255,6 @@
   <script src="/online-room-rent/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="/online-room-rent/assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="/online-room-rent/assets/vendor/php-email-form/validate.js"></script>
-
   <!-- Template Main JS File -->
   <script src="/online-room-rent/assets/js/main.js"></script>
 </body>

@@ -50,7 +50,7 @@ $(document).ready(function() {
 			"mobile":    $("#mobile").val(),
 			"password":  $("#password").val(),
 			"confirmPassword" : $("#confirmPassword").val(),
-			"roleId": $('input[name="iam"]:checked').val()
+			"role": $('input[name="iam"]:checked').val()
 			}
 			register(formData);
 		}

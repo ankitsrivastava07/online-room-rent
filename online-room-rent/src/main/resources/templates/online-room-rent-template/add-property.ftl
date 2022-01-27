@@ -138,7 +138,7 @@
                         <div class="form-group">
                         <label for="icode" class="col-md-3 control-label">Out Of</label>
                         <div class="col-md-8">
-                        <select name="outOf" class="dropdown-menu valid" aria-invalid="false" id="outOf">
+                        <select name="totalFloor" class="dropdown-menu valid" aria-invalid="false" id="totalFloor">
                        <option value="">Select Floor</option>
                          <option value="1">1</option>
                          <option value="2">2</option>

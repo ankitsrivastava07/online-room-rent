@@ -12,6 +12,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 @SpringBootApplication
 @EnableScheduling
 @EnableCaching
@@ -57,6 +60,13 @@ public class OnlineRoomRentApplication {
 		filterRegistrationBean.setFilter(new AdminTokenValidatorFilter(frontendService));
 		filterRegistrationBean.addUrlPatterns("/api/v1/admin/*");
 		return filterRegistrationBean;
+	}
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(5242880);
+		return multipartResolver;
 	}
 
 /*

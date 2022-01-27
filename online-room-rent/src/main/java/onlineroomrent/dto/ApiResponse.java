@@ -10,6 +10,7 @@ public class ApiResponse {
     private Boolean status;
     private String accessToken;
     private String redirectUri;
+    private Boolean isValidFile;
     @JsonIgnore
     private String role;
 }

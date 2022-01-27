@@ -129,6 +129,15 @@ function saveProperty(formData){
 		error: function(error) {
 		$(".alert").remove("");
 		$(".error").remove("");
+       setTimeout(function() {
+        if (error.status==400 && !error.responseJSON.isValidFile && $(".alert").length == 0) {
+           $('#addProperty').after('<div class="alert alert-danger">'+error.responseJSON.message+'</div>');
+        }
+        else{
+        $('.alert').html(error.responseJSON.message)
+        }
+    }, 500);
+
 		setTimeout(function() {
         if (error.status==400 && error.responseJSON.validationFailed && $(".alert").length == 0) {
 			jQuery.each(error.responseJSON.error, function(index, item) {

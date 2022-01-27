@@ -24,6 +24,18 @@ public class PropertyAdsEntity {
     private String title;
     private String roomSet;
     private String floor;
+    private String totalFloor;
+    private String bedroom;
+    private String bathroom;
+    private String balcony;
+    private String electricity;
+    private String water;
+    private String tenantPreferred;
+    private String rentalValue;
+    private String bookingAmount;
+    private String securityAmount;
+    private String facilities;
+    private String ageOfConstruction;
     private Date createdAt;
     private Date updatedAt;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "propertyAds")

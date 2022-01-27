@@ -31,7 +31,7 @@ public class PropertyAdsRestApiController {
     @PostMapping("/save-property")
     public ResponseEntity<?> saveProperty(@Valid PostProperty postProperty, HttpServletRequest request){
         ApiResponse apiResponse= frontendService.saveProperty(postProperty);
-        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+        return new ResponseEntity<>(apiResponse,apiResponse.getIsValidFile()?HttpStatus.OK:HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/post-property")

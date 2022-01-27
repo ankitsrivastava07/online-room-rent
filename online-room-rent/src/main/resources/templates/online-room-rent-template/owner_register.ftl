@@ -84,7 +84,7 @@
                             <label for="icode" class="col-md-3 control-label">I am</label>
                             <div class="col-md-9">
                            <#list userRoles as role>
-                              <input style="opacity: 3;" value="${role.id}" name="iam" type="radio" required>${role.name}
+                              <input style="opacity: 3;" value="${role.name}" name="iam" type="radio" required>${role.name}
                           </#list>
                          </div>
                           </div>

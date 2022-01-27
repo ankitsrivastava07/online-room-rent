@@ -17,6 +17,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -34,6 +35,14 @@ public class ExceptionHandle {
         mv.addObject("sessionExpired", OnlineRoomRentConstant.SESSION_EXPIRED_DEFAULT_MESSAGE);
         mv.setViewName("/login");
         return new ResponseEntity<>(apiError,HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(org.springframework.web.multipart.MaxUploadSizeExceededException.class)
+    public ResponseEntity<?> maxUploadSizeExceedException(MaxUploadSizeExceededException exception, HttpServletRequest request) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setStatus(Boolean.FALSE);
+        apiResponse.setMessage("Invalid file saint , Allowed file size is 5MB ");
+        apiResponse.setIsValidFile(Boolean.FALSE);
+        return new ResponseEntity<>(apiResponse,HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({JwtException.class})
