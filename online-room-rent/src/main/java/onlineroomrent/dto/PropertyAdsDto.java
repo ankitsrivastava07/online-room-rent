@@ -8,6 +8,7 @@ import java.util.List;
 public class PropertyAdsDto {
     private Long id;
     private String propertyType;
+    private String slugName;
     private Boolean isPopular=Boolean.TRUE;
     private String description;
     private String sqrtFit;

@@ -52,6 +52,7 @@ public class TokenValidatorFilter implements Filter {
             tokenStatus.setStatus(Boolean.TRUE);
             tokenStatus.setAccessToken(jwt);
             tokenStatus.setUserName(frontendService.findById(jwt));
+            tokenStatus.setUserId(frontendService.findByUserId(jwt));
             TenantContext.setTenantContext(tokenStatus);
             return true;
         }

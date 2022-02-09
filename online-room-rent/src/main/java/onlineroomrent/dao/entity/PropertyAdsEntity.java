@@ -2,7 +2,7 @@ package onlineroomrent.dao.entity;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 @Table(name="property_ads")
 @Entity
@@ -36,6 +36,7 @@ public class PropertyAdsEntity {
     private String securityAmount;
     private String facilities;
     private String ageOfConstruction;
+    private String slugName;
     private Date createdAt;
     private Date updatedAt;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "propertyAds")
@@ -48,13 +49,5 @@ public class PropertyAdsEntity {
     private PropertyCategoryEntity categoryEntity;
     @ManyToOne
     @JoinColumn(name = "userId")
-    private UserEntity userId;
-    @PrePersist
-    public void prePersists(){
-        this.createdAt=new Date();
-    }
-    @PreUpdate
-    public void preUpdate(){
-        this.updatedAt=new Date();
-    }
+    private UserEntity user;
 }

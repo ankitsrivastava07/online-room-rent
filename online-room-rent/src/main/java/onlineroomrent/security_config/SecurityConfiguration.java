@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
       httpSecurity.httpBasic().authenticationEntryPoint(authenticationEntryPoint).and()
               .authorizeRequests()
-                .antMatchers("/","/login","/home","/contact-us","/admin/**","/api/v1/property/**","/property-owner/**")
+                .antMatchers("/","/login","/home","/propertyDetail/*","/contact-us","/admin/**","/api/v1/property/**","/property-owner/**","/search-by-filter")
                 .permitAll()
                 .antMatchers("/api/v1/admin/**")
                 .permitAll()
@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers( "/favicon/**","/fonts/**","/admin-ui/**","/owner-register/**","/online-room-rent/**");
+        webSecurity.ignoring().antMatchers( "/favicon/**","/fonts/**","/admin-ui/**","/owner-register/**","/online-room-rent/**","/online-room-rent/assets/vendor/**");
     }
 
     @Bean

@@ -27,9 +27,8 @@ public class OnlineRoomRentApplication {
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(OnlineRoomRentApplication.class, args);
+		SpringApplication.run(OnlineRoomRentApplication.class,args);
 	}
-
 	@Bean
 	public FilterRegistrationBean postPropertyFilter(){
 		FilterRegistrationBean filterRegistrationBean= new FilterRegistrationBean();

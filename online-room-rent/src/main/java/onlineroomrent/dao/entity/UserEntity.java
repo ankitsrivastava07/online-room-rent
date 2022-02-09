@@ -25,7 +25,7 @@ public class UserEntity extends BaseEntity{
     private Boolean isEmailVarified=Boolean.FALSE;
     private Boolean active=Boolean.TRUE;
     private String userType;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     @Column(name="properties")
     private List<PropertyAdsEntity> properties;
     @PrePersist

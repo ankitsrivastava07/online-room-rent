@@ -1,11 +1,7 @@
 package onlineroomrent.dao.entity.country;
-
 import lombok.Getter;
 import lombok.Setter;
-import onlineroomrent.dao.entity.BaseEntity;
-
 import javax.persistence.*;
-
 @Table(name="state")
 @Entity
 @Getter

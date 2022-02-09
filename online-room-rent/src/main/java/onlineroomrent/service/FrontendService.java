@@ -27,9 +27,13 @@ public interface FrontendService {
 
     ApiResponse verfiyOtp(VerifyOTP verifyOTP);
 
-    String findById(String jwt);
+    abstract String findById(String jwt);
+
+    long findByUserId(String jwt);
 
     ApiResponse saveProperty(PostProperty postProperty);
 
     List<PropertyAdsDto> findAllPropertyAds();
+
+    List<PropertyAdsDto> findAllPropertyAdsBySlugAndAdrress(String slugName, String address, String state);
 }

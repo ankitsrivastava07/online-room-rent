@@ -119,6 +119,8 @@ update USERS_AUTHORITIES set role=4 where id=4;
 
 INSERT INTO COUNTRY(id,country,country_code,phone_code) VALUES(1,'India','IND','+91');
 INSERT INTO STATE(id,state,country_id) VALUES(1,'Delhi',1);
+INSERT INTO STATE(id,state,country_id) VALUES(2,'Uttar Pradesh',1);
 INSERT INTO CITY(id,city,state_id) VALUES(1,'New Delhi',1);
+INSERT INTO CITY(id,city,state_id) VALUES(2,'Noida Sector 62',2);
 
 INSERT INTO property_category(name,description,slug_name,user_type,admin_id,created_at,updated_at) VALUES('Apartment','Apartment','Apartment','SYSTEM_ADMIN',1,'2022-01-17',null);

@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.*;
-import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 @Service
@@ -43,6 +42,8 @@ public class FrontendServiceImpl implements FrontendService {
     PropertyCategoryRepository propertyCategoryRepository;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     RedisTemplate<String, String> redisTemplate;
     @Autowired
@@ -256,6 +257,13 @@ public class FrontendServiceImpl implements FrontendService {
         return entity != null ? entity.getUserName() : null;
     }
 
+    @Override
+    public long findByUserId(String jwt) {
+        String identityToken = getTokenIdentity(jwt, "identity");
+        JwtTokenEntity entity = jwtTokenRepository.findByTokenIdentity(identityToken);
+        return entity.getUserId();
+    }
+
     public String createAccessToken(Object object) {
         if (object instanceof AdminEntity) {
             AdminEntity entity = null;
@@ -336,23 +344,27 @@ public class FrontendServiceImpl implements FrontendService {
     @Override
     @Transactional
     public ApiResponse saveProperty(PostProperty postProperty) {
-       ApiResponse apiResponse=null;
+       TokenStatus tokenStatus = TenantContext.getCurrentTenant();
+        ApiResponse apiResponse=null;
         if(!(apiResponse=isValidFileFormat(postProperty.getImage1())).getIsValidFile() || !(apiResponse=isValidFileFormat(postProperty.getImage2())).getIsValidFile()){
             return apiResponse;
         }
         PropertyAdsEntity entity = dtoToEntityConvertor.convertToEntity(postProperty,PropertyAdsEntity.class);
+        String propertyTitle=postProperty.getPropertyTitle();
+        entity.setSlugName(propertyTitle.replace(' ','-'));
         PropertyCategoryEntity entity1=propertyCategoryRepository.findById(postProperty.getProductCategory()).get();
         entity.setCategoryEntity(entity1);
+        entity.setUser(userRepository.getById(tokenStatus.getUserId()));
         AddressEntity address = new AddressEntity();
         address.setCity(cityRepository.getById(postProperty.getCity()));
         address.setState(stateRepository.getById(postProperty.getState()));
         address.setCountry(countryRepository.getById(postProperty.getCountry()));
         address.setAddress(postProperty.getAddress());
+        address.setSlugName(postProperty.getAddress().replace(' ','-')+","+stateRepository.getById(postProperty.getState()).getState());
         entity.setAddress(address);
         entity= propertyAdsRepository.save(entity);
         saveImage(postProperty.getImage1(),entity);
         saveImage(postProperty.getImage2(),entity);
-        TokenStatus tokenStatus = TenantContext.getCurrentTenant();
         apiResponse.setMessage("Successfully saved record");
         apiResponse.setStatus(Boolean.TRUE);
         //apiResponse.se
@@ -376,6 +388,13 @@ public class FrontendServiceImpl implements FrontendService {
     @Override
     public List<PropertyAdsDto> findAllPropertyAds() {
         List<PropertyAdsEntity> entity=adsRepository.findAll();
+        List<PropertyAdsDto>dtos=dtoToEntityConvertor.convertToDto(entity,PropertyAdsDto.class);
+        return dtos;
+    }
+
+    @Override
+    public List<PropertyAdsDto> findAllPropertyAdsBySlugAndAdrress(String slugName, String address, String state) {
+        List<PropertyAdsEntity> entity=adsRepository.findAllPropertyBySlugAndAddress(slugName,address,state);
         List<PropertyAdsDto>dtos=dtoToEntityConvertor.convertToDto(entity,PropertyAdsDto.class);
         return dtos;
     }

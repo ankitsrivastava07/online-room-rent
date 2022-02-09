@@ -2,12 +2,12 @@ package onlineroomrent.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
+
 @Getter
 @Setter
 public class PostProperty {
-
     @NotNull(message = "Please enter property type")
     private String propertyType;
     @NotNull(message = "Please enter Property category id")
@@ -33,9 +33,10 @@ public class PostProperty {
     @NotNull(message = "Please enter floor")
     private String floor;
     @NotNull(message = "Please enter out of floor")
-    private String outOf;
+    private String totalFloor;
     @NotNull(message = "Please enter rent price")
     private String rentPrice;
+    @NotNull Date createdAt;
     private MultipartFile image1;
     private MultipartFile image2;
 }

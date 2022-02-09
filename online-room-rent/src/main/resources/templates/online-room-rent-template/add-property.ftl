@@ -84,7 +84,9 @@
                                     <div class="col-md-8">
                                     <select name="city" class="dropdown-menu valid" aria-invalid="false" id="city">
                                      <option value="">Select City</option>
-                                      <option value="1" data-slug="New Delhi">New Delhi</option>
+                                     <#list cities as city>
+                                      <option value="${city.id}" data-slug="${city.city}">${city.city}</option>
+                                    </#list>
                                     </select>
                                     </div>
                                 </div>
@@ -93,28 +95,29 @@
                                 <div class="col-md-8">
                                 <select name="state" class="dropdown-menu valid" aria-invalid="false" id="state">
                                <option value="">Select State</option>
-                                 <option value="1" data-slug="Delhi">Delhi</option>
+                               <#list states as state>
+                                 <option value="${state.id}" data-slug="${state.state}">${state.state}</option>
+                                </#list>
                                 </select>
                                 </div>
                             </div>
-
                         <div class="form-group">
                         <label for="icode" class="col-md-3 control-label">Country</label>
                         <div class="col-md-8">
                         <select name="country" class="dropdown-menu valid" aria-invalid="false" id="country">
                        <option value="">Select Country</option>
-                         <option value="1" data-slug="Delhi">India</option>
+                        <#list countries as country>
+                         <option value="${country.id}" data-slug="${country.country}">${country.country}</option>
+                        </#list>
                         </select>
                         </div>
                     </div>
-
                         <div class="form-group">
                         <label for="icode" class="col-md-3 control-label">Address</label>
                          <div class="col-md-8">
                         <input type="text" class="form-control valid" id="address" name="address" placeholder="Enter address with land mark" aria-invalid="false">
                         </div>
-                           </div>
-
+                        </div>
                         <div class="form-group">
                         <label for="icode" class="col-md-3 control-label">Property Title</label>
                          <div class="col-md-8">

@@ -8,5 +8,6 @@ import lombok.Setter;
 public class TokenStatus {
     private String accessToken;
     private String userName;
+    private Long userId;
     private Boolean status=Boolean.FALSE;
 }

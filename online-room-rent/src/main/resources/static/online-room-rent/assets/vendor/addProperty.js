@@ -99,6 +99,7 @@ $(document).ready(function() {
         var formData = new FormData(formTag);
         formData.append('image1', $('input#image1')[0].files[0]);
         formData.append('image2', $('input#image2')[0].files[0]);
+        formData.append('createdAt', formatDate());
 		saveProperty(formData);
 		}
 	})
@@ -160,4 +161,17 @@ $.ajax('/check-connection', {
   }
 });
 return true;
+}
+
+function formatDate() {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    return [year, month, day].join('-');
+    console.log(formatDate('Sun May 11,2014'));
 }

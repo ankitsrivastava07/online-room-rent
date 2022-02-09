@@ -4,8 +4,6 @@ import lombok.Setter;
 import onlineroomrent.dao.entity.country.CityEntity;
 import onlineroomrent.dao.entity.country.CountryEntity;
 import onlineroomrent.dao.entity.country.StateEntity;
-import onlineroomrent.dao.repository.AdminRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 @Table(name="address")
 @Entity
@@ -23,5 +21,6 @@ public class AddressEntity extends BaseEntity{
     private CountryEntity country;
     @Column(name="address",nullable = false)
     private String address;
+    private String slugName;
     private String pinCode;
 }
